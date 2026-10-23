@@ -30,6 +30,7 @@ export interface ProjectionState {
   isBlackout: boolean;
 
   // Speech & Audio Visualizer State
+  speechLang: 'am-ET' | 'en-US';
   isListening: boolean;
   liveTranscript: string;
   interimTranscript: string;
@@ -77,6 +78,7 @@ export interface ProjectionState {
   setAutoProject: (auto: boolean) => void;
   setIsBlackout: (blackout: boolean) => void;
   toggleBlackout: () => void;
+  setSpeechLang: (lang: 'am-ET' | 'en-US') => void;
   setIsListening: (listening: boolean) => void;
   setLiveTranscript: (transcript: string) => void;
   setInterimTranscript: (transcript: string) => void;
@@ -153,6 +155,7 @@ export const useProjectionStore = create<ProjectionState>((set) => ({
   isBlackout: false,
 
   // Speech & Audio Visualizer State
+  speechLang: 'am-ET',
   isListening: false,
   liveTranscript: '',
   interimTranscript: '',
@@ -212,6 +215,7 @@ export const useProjectionStore = create<ProjectionState>((set) => ({
   setAutoProject: (autoProject) => set({ autoProject }),
   setIsBlackout: (isBlackout) => set({ isBlackout }),
   toggleBlackout: () => set((state) => ({ isBlackout: !state.isBlackout })),
+  setSpeechLang: (speechLang) => set({ speechLang }),
   setIsListening: (isListening) => set({ isListening }),
   setLiveTranscript: (liveTranscript) => set({ liveTranscript }),
   setInterimTranscript: (interimTranscript) => set({ interimTranscript }),

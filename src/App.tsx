@@ -316,6 +316,10 @@ export function App() {
               useProjectionStore.getState().setActiveProjection(citation);
               useProjectionStore.getState().setIsBlackout(false);
             }
+          } else if (!import.meta.env.VITE_GEMINI_API_KEY) {
+            useProjectionStore.getState().setSpeechError(
+              "⚠️ Gemini AI key is not configured in Vercel. Pre-seeded verses work offline, but to resolve preachings and semantic quotes, add VITE_GEMINI_API_KEY in Vercel Settings → Environment Variables and redeploy."
+            );
           }
         } catch {
           useProjectionStore.getState().setIsAiResolving(false);
@@ -385,7 +389,7 @@ export function App() {
       }
 
       const recognition = new SpeechRecognition();
-      recognition.lang = 'am-ET';
+      recognition.lang = useProjectionStore.getState().speechLang || 'am-ET';
       recognition.continuous = true;
       recognition.interimResults = true;
 

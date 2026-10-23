@@ -28,6 +28,8 @@ export function SpeechPanel({ onToggleMic, onProcessSpeech, onSelectAudioDevice 
   const isAiResolving = useProjectionStore((s) => s.isAiResolving);
   const selectedAudioDeviceId = useProjectionStore((s) => s.selectedAudioDeviceId);
   const setSelectedAudioDeviceId = useProjectionStore((s) => s.setSelectedAudioDeviceId);
+  const speechLang = useProjectionStore((s) => s.speechLang);
+  const setSpeechLang = useProjectionStore((s) => s.setSpeechLang);
   const uiTheme = useProjectionStore((s) => s.uiTheme);
   const uiLanguage = useProjectionStore((s) => s.uiLanguage);
 
@@ -114,7 +116,7 @@ export function SpeechPanel({ onToggleMic, onProcessSpeech, onSelectAudioDevice 
           : 'bg-slate-900/90 border-slate-800 text-slate-100 shadow-xl'
       }`}
     >
-      <div className="flex items-center justify-between mb-3">
+      <div className="flex items-center justify-between mb-3 flex-wrap gap-2">
         <div className="flex items-center gap-2">
           <Volume2 className="w-4 h-4 text-amber-500" />
           <h2
@@ -125,13 +127,48 @@ export function SpeechPanel({ onToggleMic, onProcessSpeech, onSelectAudioDevice 
             {t.speechTitle}
           </h2>
         </div>
-        <span
-          className={`text-[11px] font-mono ${
-            isLight ? 'text-emerald-700 font-semibold' : 'text-emerald-400'
-          }`}
-        >
-          {t.speechMapReady}
-        </span>
+
+        <div className="flex items-center gap-2">
+          {/* Speech Language Switcher (Amharic vs English STT) */}
+          <div
+            className={`flex items-center rounded-lg border overflow-hidden text-xs p-0.5 ${
+              isLight ? 'bg-slate-100 border-slate-300' : 'bg-slate-900 border-slate-700'
+            }`}
+          >
+            <button
+              type="button"
+              onClick={() => setSpeechLang('am-ET')}
+              title="Set Speech Recognizer to Amharic (am-ET)"
+              className={`px-2 py-0.5 text-[10px] font-bold rounded transition cursor-pointer ${
+                speechLang === 'am-ET'
+                  ? 'bg-amber-500 text-slate-950 font-black shadow-xs'
+                  : 'text-slate-400 hover:text-slate-200'
+              }`}
+            >
+              🇪🇹 am-ET
+            </button>
+            <button
+              type="button"
+              onClick={() => setSpeechLang('en-US')}
+              title="Set Speech Recognizer to English (en-US)"
+              className={`px-2 py-0.5 text-[10px] font-bold rounded transition cursor-pointer ${
+                speechLang === 'en-US'
+                  ? 'bg-amber-500 text-slate-950 font-black shadow-xs'
+                  : 'text-slate-400 hover:text-slate-200'
+              }`}
+            >
+              🇺🇸 en-US
+            </button>
+          </div>
+
+          <span
+            className={`text-[11px] font-mono ${
+              isLight ? 'text-emerald-700 font-semibold' : 'text-emerald-400'
+            }`}
+          >
+            {t.speechMapReady}
+          </span>
+        </div>
       </div>
 
       {/* Mic Button + Isolated Audio Waveform */}

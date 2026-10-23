@@ -12,18 +12,20 @@ export interface GeminiVerseResolution {
 }
 
 /**
- * Resolves spoken Amharic transcripts using Google Gemini 2.5 Flash API
+ * Resolves spoken Amharic transcripts using Google Gemini Flash API
  * Provides semantic fallback when exact citation regex does not match
  */
 export async function resolveAmharicVerseWithGemini(
   spokenAmharic: string
 ): Promise<GeminiVerseResolution | null> {
-  const apiKey = import.meta.env.VITE_GEMINI_API_KEY || '';
+  const apiKey = (import.meta.env.VITE_GEMINI_API_KEY || '').trim();
   if (!apiKey) {
-    console.warn('Gemini API key not configured. Set VITE_GEMINI_API_KEY in .env');
+    console.warn('Gemini API key not configured. Set VITE_GEMINI_API_KEY in .env or Vercel Environment Variables.');
     return null;
   }
-  const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`;
+
+  // Use official stable Flash alias with 3.8 fallback
+  const models = ['gemini-flash-latest', 'gemini-3.8-flash'];
 
   const systemPrompt = `You are an expert Ethiopian Orthodox & Evangelical Church Bible Projection Assistant specializing in the 1954 Haile Selassie Amharic Bible (መጽሐፍ ቅዱስ).
 A preacher is speaking in Amharic. Analyze the spoken Amharic transcript:
@@ -60,25 +62,36 @@ A preacher is speaking in Amharic. Analyze the spoken Amharic transcript:
     }
   };
 
-  let delay = 700;
-  for (let attempt = 0; attempt < 3; attempt++) {
-    try {
-      const response = await fetch(apiUrl, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload)
-      });
-      if (!response.ok) throw new Error(`HTTP ${response.status}`);
-      const result = await response.json();
-      const rawJson = result?.candidates?.[0]?.content?.parts?.[0]?.text;
-      if (rawJson) {
-        return JSON.parse(rawJson);
+  for (const model of models) {
+    const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
+    let delay = 600;
+    for (let attempt = 0; attempt < 2; attempt++) {
+      try {
+        const response = await fetch(apiUrl, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
+          signal: AbortSignal.timeout(9000)
+        });
+        if (!response.ok) {
+          // If model not found or forbidden, try next candidate model
+          if (response.status === 404 || response.status === 400) break;
+          throw new Error(`HTTP ${response.status}`);
+        }
+        const result = await response.json();
+        const rawJson = result?.candidates?.[0]?.content?.parts?.[0]?.text;
+        if (rawJson) {
+          return JSON.parse(rawJson);
+        }
+        return null;
+      } catch (err: any) {
+        if (err?.name === 'AbortError' || err?.name === 'TimeoutError') {
+          break;
+        }
+        if (attempt === 1) break;
+        await new Promise((r) => setTimeout(r, delay));
+        delay *= 2;
       }
-      return null;
-    } catch {
-      if (attempt === 2) return null;
-      await new Promise((r) => setTimeout(r, delay));
-      delay *= 2;
     }
   }
   return null;

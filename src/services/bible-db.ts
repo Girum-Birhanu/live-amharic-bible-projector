@@ -28,9 +28,17 @@ export class OfflineAmharicBibleDB {
         this.indexBooksArray(cachedBooks);
         this.lastInitLatencyMs = Math.max(1, Math.round(performance.now() - start));
 
-        // If the cache only has the small initial seed (< 1000 verses), automatically load the full 30,752-verse Bible in background
-        if (this.verseMap.size < 1000 && typeof window !== 'undefined') {
-          this.loadPrepackagedBible().catch(() => {});
+        // If the cache only has the small initial seed (< 1000 verses), automatically load the full 30,752-verse Bible immediately
+        if (this.verseMap.size < 1000) {
+          try {
+            const prepackaged = await this.loadPrepackagedBible();
+            this.lastInitLatencyMs = Math.max(1, Math.round(performance.now() - start));
+            return {
+              books: prepackaged.books,
+              totalVerses: prepackaged.totalVerses,
+              latencyMs: this.lastInitLatencyMs
+            };
+          } catch {}
         }
 
         return {
