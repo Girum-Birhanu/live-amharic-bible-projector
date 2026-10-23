@@ -397,6 +397,18 @@ export function parseExplicitCitationLocally(
  * Fast regex citation parser + 4-tier local semantic phrase matcher (<15ms)
  * Resolves both numbered citations and famous spoken scripture quotes directly offline.
  */
+/**
+ * Extracts the grammatical stem for an Amharic word by stripping common prefixes and suffixes
+ */
+export function getAmharicStem(word: string): string {
+  let w = word.trim();
+  // Strip common Amharic prefixes: የሚ, እሚ, ስለ, እንደ, በ, ለ, ከ, የ, ወደ, ብ
+  w = w.replace(/^(?:የሚ|እሚ|ስለ|እንደ|በ|ለ|ከ|የ|ወደ)/, '');
+  // Strip common suffixes: ታላችሁ, ማላችሁ, ኛላችሁ, ዎችን, ዎች, ቸው, ውን, ታል, ችሁ, ንም, ን, ው, ዋ, ም, ና, ት
+  w = w.replace(/(?:ታላችሁ|ማላችሁ|ኛላችሁ|ዎችን|ዎች|ቸው|ውን|ታል|ችሁ|ንም|ን|ው|ዋ|ም|ና|ት)$/, '');
+  return w;
+}
+
 export function parseAmharicScriptureLocally(
   rawTranscript: string
 ): ParsedScriptureResult | null {
@@ -476,28 +488,38 @@ export function parseAmharicScriptureLocally(
     }
   }
 
-  // Tier 4: Content Words Co-occurrence (paraphrased or slight speech-to-text variation)
-  const stopWords = new Set(['ነው', 'ና', 'ስለ', 'ይላል', 'ብሎ', 'ወደ', 'ጋር', 'ላይ', 'ውስጥ', 'እንደ', 'እኔ', 'አንተ', 'እኛ', 'ግን', 'ሁሉ', 'እንዲህ', 'ደግሞ', 'ሆይ']);
-  const contentWords = spokenWords.filter(w => w.length >= 3 && !stopWords.has(w));
-  if (contentWords.length >= 3) {
+  // Tier 4: Content Words & Morphological Stem Co-occurrence (paraphrased or colloquial preachings)
+  const stopWords = new Set(['ነው', 'ና', 'ስለ', 'ይላል', 'ብሎ', 'ወደ', 'ጋር', 'ላይ', 'ውስጥ', 'እንደ', 'እኔ', 'አንተ', 'እኛ', 'ግን', 'ሁሉ', 'እንዲህ', 'ደግሞ', 'ሆይ', 'ያለውን', 'ይህ', 'ያለ']);
+  const contentWords = spokenWords.filter((w) => w.length >= 2 && !stopWords.has(w));
+  const stems = contentWords.map(getAmharicStem).filter((s) => s.length >= 2 && !stopWords.has(s));
+
+  if (stems.length >= 2) {
     let bestRecord: any = null;
-    let maxMatches = 0;
+    let maxScore = 0;
 
     for (const record of offlineBibleDB.verseMap.values()) {
       const cleanVerse = record.cleanText || record.text.replace(/[።፣፤፥፦፡?!,.\-–"'\(\)\[\]]/g, ' ').replace(/\s+/g, ' ').trim();
-      let matches = 0;
-      for (const w of contentWords) {
-        if (cleanVerse.includes(w)) matches++;
+      let exactMatches = 0;
+      let stemMatches = 0;
+
+      for (const cw of contentWords) {
+        if (cleanVerse.includes(cw)) exactMatches++;
       }
-      if (matches >= 3 && matches / contentWords.length >= 0.75) {
-        if (matches > maxMatches) {
-          maxMatches = matches;
+      for (const st of stems) {
+        if (cleanVerse.includes(st)) stemMatches++;
+      }
+
+      // Check for strong correlation: at least 2 distinct stems or high exact match
+      if (stemMatches >= 2 || (contentWords.length <= 2 && stemMatches >= 1 && exactMatches >= 1)) {
+        const score = exactMatches * 3.0 + stemMatches * 1.5;
+        if (score > maxScore) {
+          maxScore = score;
           bestRecord = record;
         }
       }
     }
 
-    if (bestRecord) {
+    if (bestRecord && maxScore >= 4.5) {
       return {
         bookId: bestRecord.bookId,
         bookNameAm: bestRecord.bookNameAm,
@@ -506,7 +528,7 @@ export function parseAmharicScriptureLocally(
         verseStart: bestRecord.verse,
         verseEnd: bestRecord.verse,
         engine: 'LOCAL_SEMANTIC',
-        confidence: 0.88
+        confidence: Math.min(0.96, Number((0.75 + maxScore * 0.02).toFixed(2)))
       };
     }
   }

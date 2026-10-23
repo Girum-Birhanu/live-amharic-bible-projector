@@ -10,6 +10,11 @@ export interface PreacherPreset {
 
 export const PREACHER_SIMULATION_PRESETS: PreacherPreset[] = [
   {
+    label: "እግዚአብሔርን ፈልጉ (1 Chr 16:11)",
+    category: "Semantic Preaching",
+    utterance: "እግዚአብሔርን ፈልጉ ታገኙታላችሁ"
+  },
+  {
     label: "ኢሳያ ስምንት ሁለት (Isaiah 8:2)",
     category: "Fast Spoken • Isaiah",
     utterance: "ኢሳያ ስምንት ሁለት"

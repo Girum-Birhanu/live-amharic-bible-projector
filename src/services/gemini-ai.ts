@@ -74,7 +74,11 @@ A preacher is speaking in Amharic. Analyze the spoken Amharic transcript:
           signal: AbortSignal.timeout(9000)
         });
         if (!response.ok) {
-          // If model not found or forbidden, try next candidate model
+          if (response.status === 429) {
+            console.warn('Gemini API quota exceeded (HTTP 429). Falling back to local 66-book scripture engine.');
+            return null;
+          }
+          // If model not found or invalid argument, try next candidate model
           if (response.status === 404 || response.status === 400) break;
           throw new Error(`HTTP ${response.status}`);
         }
