@@ -95,21 +95,21 @@ export function normalizeAmharicNumbers(input: string): string {
   });
 
   // 3. Normalize book prefixes for multi-part books (English and Amharic)
-  text = text.replace(/(?:^|[\s፡፣,])(?:አንደኛ|1ኛ|1st|first|1|፩|፩ኛ)\s*(?:ዮሐንስ|john|jn)/gi, ' 1ኛ ዮሐንስ ');
-  text = text.replace(/(?:^|[\s፡፣,])(?:ሁለተኛ|2ኛ|2nd|second|2|፪|፪ኛ)\s*(?:ዮሐንስ|john|jn)/gi, ' 2ኛ ዮሐንስ ');
-  text = text.replace(/(?:^|[\s፡፣,])(?:ሦስተኛ|ሶስተኛ|3ኛ|3rd|third|3|፫|፫ኛ)\s*(?:ዮሐንስ|john|jn)/gi, ' 3ኛ ዮሐንስ ');
+  text = text.replace(/(?:^|[\s፡፣,])(?:አንደኛ|1ኛ|1st|first|1|፩|፩ኛ)\s*(?:ዮሐንስ|ዮሃንስ|ዮሀንስ|john|jn)/gi, ' 1ኛ ዮሐንስ ');
+  text = text.replace(/(?:^|[\s፡፣,])(?:ሁለተኛ|2ኛ|2nd|second|2|፪|፪ኛ)\s*(?:ዮሐንስ|ዮሃንስ|ዮሀንስ|john|jn)/gi, ' 2ኛ ዮሐንስ ');
+  text = text.replace(/(?:^|[\s፡፣,])(?:ሦስተኛ|ሶስተኛ|3ኛ|3rd|third|3|፫|፫ኛ)\s*(?:ዮሐንስ|ዮሃንስ|ዮሀንስ|john|jn)/gi, ' 3ኛ ዮሐንስ ');
 
-  text = text.replace(/(?:^|[\s፡፣,])(?:አንደኛ|1ኛ|1st|first|1|፩|፩ኛ)\s*(?:ቆሮንቶስ|corinthians|cor)/gi, ' 1ኛ ቆሮንቶስ ');
-  text = text.replace(/(?:^|[\s፡፣,])(?:ሁለተኛ|2ኛ|2nd|second|2|፪|፪ኛ)\s*(?:ቆሮንቶስ|corinthians|cor)/gi, ' 2ኛ ቆሮንቶስ ');
+  text = text.replace(/(?:^|[\s፡፣,])(?:አንደኛ|1ኛ|1st|first|1|፩|፩ኛ)\s*(?:ቆሮንቶስ|ቆሮንጦስ|corinthians|cor)/gi, ' 1ኛ ቆሮንቶስ ');
+  text = text.replace(/(?:^|[\s፡፣,])(?:ሁለተኛ|2ኛ|2nd|second|2|፪|፪ኛ)\s*(?:ቆሮንቶስ|ቆሮንጦስ|corinthians|cor)/gi, ' 2ኛ ቆሮንቶስ ');
 
-  text = text.replace(/(?:^|[\s፡፣,])(?:አንደኛ|1ኛ|1st|first|1|፩|፩ኛ)\s*(?:ጴጥሮስ|peter|pet)/gi, ' 1ኛ ጴጥሮስ ');
-  text = text.replace(/(?:^|[\s፡፣,])(?:ሁለተኛ|2ኛ|2nd|second|2|፪|፪ኛ)\s*(?:ጴጥሮስ|peter|pet)/gi, ' 2ኛ ጴጥሮስ ');
+  text = text.replace(/(?:^|[\s፡፣,])(?:አንደኛ|1ኛ|1st|first|1|፩|፩ኛ)\s*(?:ጴጥሮስ|ፔጥሮስ|ጴጥሮ|peter|pet)/gi, ' 1ኛ ጴጥሮስ ');
+  text = text.replace(/(?:^|[\s፡፣,])(?:ሁለተኛ|2ኛ|2nd|second|2|፪|፪ኛ)\s*(?:ጴጥሮስ|ፔጥሮስ|ጴጥሮ|peter|pet)/gi, ' 2ኛ ጴጥሮስ ');
 
-  text = text.replace(/(?:^|[\s፡፣,])(?:አንደኛ|1ኛ|1st|first|1|፩|፩ኛ)\s*(?:ጢሞቴዎስ|timothy|tim)/gi, ' 1ኛ ጢሞቴዎስ ');
-  text = text.replace(/(?:^|[\s፡፣,])(?:ሁለተኛ|2ኛ|2nd|second|2|፪|፪ኛ)\s*(?:ጢሞቴዎስ|timothy|tim)/gi, ' 2ኛ ጢሞቴዎስ ');
+  text = text.replace(/(?:^|[\s፡፣,])(?:አንደኛ|1ኛ|1st|first|1|፩|፩ኛ)\s*(?:ጢሞቴዎስ|ጢሞቴዎ|timothy|tim)/gi, ' 1ኛ ጢሞቴዎስ ');
+  text = text.replace(/(?:^|[\s፡፣,])(?:ሁለተኛ|2ኛ|2nd|second|2|፪|፪ኛ)\s*(?:ጢሞቴዎስ|ጢሞቴዎ|timothy|tim)/gi, ' 2ኛ ጢሞቴዎስ ');
 
-  text = text.replace(/(?:^|[\s፡፣,])(?:አንደኛ|1ኛ|1st|first|1|፩|፩ኛ)\s*(?:ተሰሎንቄ|thessalonians|thess)/gi, ' 1ኛ ተሰሎንቄ ');
-  text = text.replace(/(?:^|[\s፡፣,])(?:ሁለተኛ|2ኛ|2nd|second|2|፪|፪ኛ)\s*(?:ተሰሎንቄ|thessalonians|thess)/gi, ' 2ኛ ተሰሎንቄ ');
+  text = text.replace(/(?:^|[\s፡፣,])(?:አንደኛ|1ኛ|1st|first|1|፩|፩ኛ)\s*(?:ተሰሎንቄ|ተሰሎንቀ|thessalonians|thess)/gi, ' 1ኛ ተሰሎንቄ ');
+  text = text.replace(/(?:^|[\s፡፣,])(?:ሁለተኛ|2ኛ|2nd|second|2|፪|፪ኛ)\s*(?:ተሰሎንቄ|ተሰሎንቀ|thessalonians|thess)/gi, ' 2ኛ ተሰሎንቄ ');
 
   text = text.replace(/(?:^|[\s፡፣,])(?:አንደኛ|1ኛ|1st|first|1|፩|፩ኛ)\s*(?:ሳሙኤል|samuel|sam)/gi, ' 1ኛ ሳሙኤል ');
   text = text.replace(/(?:^|[\s፡፣,])(?:ሁለተኛ|2ኛ|2nd|second|2|፪|፪ኛ)\s*(?:ሳሙኤል|samuel|sam)/gi, ' 2ኛ ሳሙኤል ');
@@ -117,8 +117,8 @@ export function normalizeAmharicNumbers(input: string): string {
   text = text.replace(/(?:^|[\s፡፣,])(?:አንደኛ|1ኛ|1st|first|1|፩|፩ኛ)\s*(?:ነገሥት|ነገስት|kings|kgs)/gi, ' 1ኛ ነገሥት ');
   text = text.replace(/(?:^|[\s፡፣,])(?:ሁለተኛ|2ኛ|2nd|second|2|፪|፪ኛ)\s*(?:ነገሥት|ነገስት|kings|kgs)/gi, ' 2ኛ ነገሥት ');
 
-  text = text.replace(/(?:^|[\s፡፣,])(?:አንደኛ|1ኛ|1st|first|1|፩|፩ኛ)\s*(?:ዜና|chronicles|chr)/gi, ' 1ኛ ዜና ');
-  text = text.replace(/(?:^|[\s፡፣,])(?:ሁለተኛ|2ኛ|2nd|second|2|፪|፪ኛ)\s*(?:ዜና|chronicles|chr)/gi, ' 2ኛ ዜና ');
+  text = text.replace(/(?:^|[\s፡፣,])(?:አንደኛ|1ኛ|1st|first|1|፩|፩ኛ)\s*(?:ዜና\s*መዋዕል|ዜና|chronicles|chr)/gi, ' 1ኛ ዜና ');
+  text = text.replace(/(?:^|[\s፡፣,])(?:ሁለተኛ|2ኛ|2nd|second|2|፪|፪ኛ)\s*(?:ዜና\s*መዋዕል|ዜና|chronicles|chr)/gi, ' 2ኛ ዜና ');
 
   // 4. Convert compound spoken Amharic numbers (e.g., "አሥራ ስድስት" -> "16", "ሃያ ሦስት" -> "23")
   const tensPattern = Object.keys(AMHARIC_TENS).join('|');
@@ -317,7 +317,7 @@ export function parseExplicitCitationLocally(
   for (const item of COMPILED_BOOK_ALIASES) {
     // Pattern 1: Standard or Fast Short -> [Book] (በምዕራፍ|chapter|ch)? [Chapter] (ከቁጥር|verse|v)? [Verse]?
     const forwardRegex = new RegExp(
-      `${item.prefixPattern}${item.alias}${item.suffixPattern}[\\s፣,]*?(?:በምዕራፍ|ምዕራፍ|መዝሙር|ላይ|chapter|chap|ch|c)?\\s*(\\d+)(?:[\\s፣,:፥]*(?:ከቁጥር|በቁጥር|ቁጥር|verses|verse|vs|v|from)?\\s*(\\d+)(?:\\s*(?:እስከ|-|to|through)\\s*(\\d+))?)?`,
+      `${item.prefixPattern}${item.alias}${item.suffixPattern}[\\s፡፣,]*?(?:በምዕራፍ|ምዕራፍ|መዝሙር|ላይ|chapter|chap|ch|c)?\\s*(\\d+)(?:[\\s፡፣,:፥]*(?:ከቁጥር|በቁጥር|ቁጥር|ከ|እና|ቁ|verses|verse|vs|v|from)?\\s*(\\d+)(?:\\s*(?:እስከ|-|to|through)\\s*(\\d+))?)?`,
       'i'
     );
     const forwardMatch = normalized.match(forwardRegex);
@@ -356,7 +356,7 @@ export function parseExplicitCitationLocally(
 
     // Pattern 2: Reversed conversational -> ምዕራፍ [Chapter] ቁጥር [Verse] ... [Book]
     const reverseRegex = new RegExp(
-      `(?:በምዕራፍ|ምዕራፍ|መዝሙር|chapter|chap|ch)\\s*(\\d+)(?:[\\s፣,:፥]*(?:ከቁጥር|በቁጥር|ቁጥር|verses|verse|vs|v|from)?\\s*(\\d+)(?:\\s*(?:እስከ|-|to)\\s*(\\d+))?)?.*?${item.prefixPattern}${item.alias}${item.suffixPattern}`,
+      `(?:በምዕራፍ|ምዕራፍ|መዝሙር|chapter|chap|ch)\\s*(\\d+)(?:[\\s፡፣,:፥]*(?:ከቁጥር|በቁጥር|ቁጥር|ከ|እና|ቁ|verses|verse|vs|v|from)?\\s*(\\d+)(?:\\s*(?:እስከ|-|to)\\s*(\\d+))?)?.*?${item.prefixPattern}${item.alias}${item.suffixPattern}`,
       'i'
     );
     const reverseMatch = normalized.match(reverseRegex);

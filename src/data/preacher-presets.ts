@@ -10,6 +10,11 @@ export interface PreacherPreset {
 
 export const PREACHER_SIMULATION_PRESETS: PreacherPreset[] = [
   {
+    label: "ኢሳያ ስምንት ሁለት (Isaiah 8:2)",
+    category: "Fast Spoken • Isaiah",
+    utterance: "ኢሳያ ስምንት ሁለት"
+  },
+  {
     label: "1ኛ ቆሮንቶስ 25 (Fused '2 5' Speech)",
     category: "Fused Number Auto-Split",
     utterance: "1ኛ ቆሮንቶስ 25"
