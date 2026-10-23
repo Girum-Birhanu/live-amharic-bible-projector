@@ -1,0 +1,62 @@
+@import 'tailwindcss';
+
+:root {
+  --amharic-font-family: 'Noto Serif Ethiopic', 'Nyala', serif;
+}
+
+.ethiopic-serif {
+  font-family: var(--amharic-font-family, 'Noto Serif Ethiopic', 'Nyala', serif) !important;
+}
+
+.font-noto-serif {
+  font-family: 'Noto Serif Ethiopic', 'Nyala', serif !important;
+}
+
+.font-noto-sans {
+  font-family: 'Noto Sans Ethiopic', 'Segoe UI Historic', sans-serif !important;
+}
+
+.font-abyssinica {
+  font-family: 'Abyssinica SIL', 'Noto Serif Ethiopic', serif !important;
+}
+
+.font-menbere {
+  font-family: 'Menbere', 'Noto Sans Ethiopic', sans-serif !important;
+}
+
+.font-nyala {
+  font-family: 'Nyala', 'Noto Serif Ethiopic', serif !important;
+}
+
+.font-hibur-mono {
+  font-family: 'Hibur Mono', monospace !important;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Elegant Sanctuary Projector Scrollbar */
+.sanctuary-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(251, 191, 36, 0.5) rgba(15, 23, 42, 0.4);
+}
+.sanctuary-scrollbar::-webkit-scrollbar {
+  width: 7px;
+}
+.sanctuary-scrollbar::-webkit-scrollbar-track {
+  background: rgba(15, 23, 42, 0.4);
+  border-radius: 9999px;
+}
+.sanctuary-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(251, 191, 36, 0.45);
+  border-radius: 9999px;
+  border: 1px solid rgba(251, 191, 36, 0.25);
+}
+.sanctuary-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba(251, 191, 36, 0.85);
+}

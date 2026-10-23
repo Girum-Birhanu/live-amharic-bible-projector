@@ -1,0 +1,13 @@
+export const BROADCAST_CHANNEL_NAME = 'kale_egziabher_projector_v1';
+export const DB_NAME = 'KaleEgziabherBibleDB';
+export const DB_VERSION = 3;
+export const STORE_NAME = 'bibleStore';
+export const SESSIONS_STORE_NAME = 'sessionsStore';
+export const STORAGE_KEY = 'amharic_1954_books_v2';
+export const SESSION_STORAGE_KEY = 'kale_egziabher_session_snapshot';
+export const LOCAL_STORAGE_PREFS_KEY = 'kale_egziabher_preferences';
+export const LOCAL_STORAGE_LAST_SESSION_KEY = 'kale_egziabher_last_session';
+export const SESSION_AUTO_SAVE_INTERVAL_MS = 30000;
+export const SESSION_EXPIRY_MS = 2 * 60 * 60 * 1000; // 2 hours
+export const PEER_TIMEOUT_MS = 6500;
+export const HEARTBEAT_INTERVAL_MS = 2200;
