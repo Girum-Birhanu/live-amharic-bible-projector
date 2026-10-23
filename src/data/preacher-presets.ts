@@ -10,6 +10,11 @@ export interface PreacherPreset {
 
 export const PREACHER_SIMULATION_PRESETS: PreacherPreset[] = [
   {
+    label: "መሀልዬ መሀልዬ (Song 4:3)",
+    category: "Song of Solomon",
+    utterance: "መሀልዬ መሀልዬ ዘሰለሞን ምዕራፍ 4 ቁጥር 3"
+  },
+  {
     label: "እግዚአብሔርን ፈልጉ (1 Chr 16:11)",
     category: "Semantic Preaching",
     utterance: "እግዚአብሔርን ፈልጉ ታገኙታላችሁ"
