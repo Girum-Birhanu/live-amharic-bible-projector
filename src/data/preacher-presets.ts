@@ -95,6 +95,11 @@ export const PREACHER_SIMULATION_PRESETS: PreacherPreset[] = [
     utterance: "ትንቢተ ኤርምያስ ምዕራፍ 29 ቁጥር 11 ለእናንተ የማስባትን አሳብ እኔ አውቃለሁ ይላል እግዚአብሔር።"
   },
   {
+    label: "ሕዝቅኤል 1፥2 (hizikiel ምእራፍ 1 ቁጥር ሁለት)",
+    category: "Phonetic STT • 0.01ms",
+    utterance: "hizikiel ምእራፍ 1 ቁጥር ሁለት"
+  },
+  {
     label: "ኢያሱ 1፥9 (Gemini AI + Auto-IndexedDB Save)",
     category: "Gemini AI -> IndexedDB",
     utterance: "መጽሐፈ ኢያሱ ምዕራፍ 1 ቁጥር 9 በርታና ጽና አትፍራ አትደንግጥ የሚለውን ቃል አውጡልኝ።"

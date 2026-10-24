@@ -51,8 +51,8 @@ const ENGLISH_BOOK_ABBREVIATIONS: Record<number, string[]> = {
   13: ['1 Chron', '1Chr', '1 Chronicles'], 14: ['2 Chron', '2Chr', '2 Chronicles'],
   15: ['Ezra'], 16: ['Neh', 'Nehemiah'], 17: ['Esther', 'Esth'], 18: ['Job'],
   19: ['Ps', 'Psalm', 'Psalms'], 20: ['Prov', 'Proverbs'], 21: ['Eccl', 'Ecclesiastes'],
-  22: ['Song of Solomon', 'Song of Songs', 'Songs of Solomon', 'Song', 'Songs', 'Canticles'], 23: ['Isa', 'Isaiah'], 24: ['Jer', 'Jeremiah'],
-  25: ['Lam', 'Lamentations'], 26: ['Ezek', 'Ezekiel'], 27: ['Dan', 'Daniel'],
+  22: ['Song of Solomon', 'Song of Songs', 'Songs of Solomon', 'Song', 'Songs', 'Canticles'], 23: ['Isa', 'Isaiah'], 24: ['Jer', 'Jeremiah', 'ermias', 'erimias'],
+  25: ['Lam', 'Lamentations'], 26: ['Ezek', 'Ezekiel', 'hizikiel', 'hezikiel', 'hezekiel', 'hizkiel', 'hizqiel', 'hezqiel', 'ezk'], 27: ['Dan', 'Daniel', 'daniel'],
   28: ['Hos', 'Hosea'], 29: ['Joel'], 30: ['Amos'], 31: ['Obad', 'Obadiah'],
   32: ['Jonah', 'Jon'], 33: ['Mic', 'Micah'], 34: ['Nah', 'Nahum'],
   35: ['Hab', 'Habakkuk'], 36: ['Zeph', 'Zephaniah'], 37: ['Hag', 'Haggai'],
@@ -317,7 +317,7 @@ export function parseExplicitCitationLocally(
   for (const item of COMPILED_BOOK_ALIASES) {
     // Pattern 1: Standard or Fast Short -> [Book] (በምዕራፍ|chapter|ch)? [Chapter] (ከቁጥር|verse|v)? [Verse]?
     const forwardRegex = new RegExp(
-      `${item.prefixPattern}${item.alias}${item.suffixPattern}[\\s፡፣,]*?(?:በምዕራፍ|ምዕራፍ|መዝሙር|ላይ|chapter|chap|ch|c)?\\s*(\\d+)(?:[\\s፡፣,:፥]*(?:ከቁጥር|በቁጥር|ቁጥር|ከ|እና|ቁ|verses|verse|vs|v|from)?\\s*(\\d+)(?:\\s*(?:እስከ|-|to|through)\\s*(\\d+))?)?`,
+      `${item.prefixPattern}${item.alias}${item.suffixPattern}[\\s፡፣,]*?(?:በምዕራፍ|በምእራፍ|ምዕራፍ|ምእራፍ|ም/ፍ|ምዕ\\.|ምእ\\.|መዝሙር|ላይ|chapter|chap|ch|c)?\\s*(\\d+)(?:[\\s፡፣,:፥]*(?:ከቁጥር|በቁጥር|ቁጥር|ከ|እና|ቁ|ቁ\\.|verses|verse|vs|v|from)?\\s*(\\d+)(?:\\s*(?:እስከ|-|to|through)\\s*(\\d+))?)?`,
       'i'
     );
     const forwardMatch = normalized.match(forwardRegex);
@@ -356,7 +356,7 @@ export function parseExplicitCitationLocally(
 
     // Pattern 2: Reversed conversational -> ምዕራፍ [Chapter] ቁጥር [Verse] ... [Book]
     const reverseRegex = new RegExp(
-      `(?:በምዕራፍ|ምዕራፍ|መዝሙር|chapter|chap|ch)\\s*(\\d+)(?:[\\s፡፣,:፥]*(?:ከቁጥር|በቁጥር|ቁጥር|ከ|እና|ቁ|verses|verse|vs|v|from)?\\s*(\\d+)(?:\\s*(?:እስከ|-|to)\\s*(\\d+))?)?.*?${item.prefixPattern}${item.alias}${item.suffixPattern}`,
+      `(?:በምዕራፍ|በምእራፍ|ምዕራፍ|ምእራፍ|ም/ፍ|ምዕ\\.|ምእ\\.|መዝሙር|chapter|chap|ch)\\s*(\\d+)(?:[\\s፡፣,:፥]*(?:ከቁጥር|በቁጥር|ቁጥር|ከ|እና|ቁ|ቁ\\.|verses|verse|vs|v|from)?\\s*(\\d+)(?:\\s*(?:እስከ|-|to)\\s*(\\d+))?)?.*?${item.prefixPattern}${item.alias}${item.suffixPattern}`,
       'i'
     );
     const reverseMatch = normalized.match(reverseRegex);
