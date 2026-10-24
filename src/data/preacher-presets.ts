@@ -100,6 +100,11 @@ export const PREACHER_SIMULATION_PRESETS: PreacherPreset[] = [
     utterance: "hizikiel ምእራፍ 1 ቁጥር ሁለት"
   },
   {
+    label: "ኢሳይያስ 1፥2 (Isaiah 1:2)",
+    category: "O(1) Map • 0.01ms",
+    utterance: "ትንቢተ ኢሳይያስ ምዕራፍ 1 ቁጥር 2"
+  },
+  {
     label: "ኢያሱ 1፥9 (Gemini AI + Auto-IndexedDB Save)",
     category: "Gemini AI -> IndexedDB",
     utterance: "መጽሐፈ ኢያሱ ምዕራፍ 1 ቁጥር 9 በርታና ጽና አትፍራ አትደንግጥ የሚለውን ቃል አውጡልኝ።"

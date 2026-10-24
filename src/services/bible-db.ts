@@ -38,7 +38,9 @@ export class OfflineAmharicBibleDB {
               totalVerses: prepackaged.totalVerses,
               latencyMs: this.lastInitLatencyMs
             };
-          } catch {}
+          } catch (err) {
+            console.warn('Auto-upgrading to full prepackaged bible failed:', err);
+          }
         }
 
         return {
@@ -53,18 +55,16 @@ export class OfflineAmharicBibleDB {
 
     // Try auto-loading bundled /amharic_bible.json first if available
     try {
-      const res = await fetch('/amharic_bible.json');
-      if (res.ok) {
-        const rawJson = await res.json();
-        const result = await this.importCustomBibleJSON(rawJson);
-        this.lastInitLatencyMs = Math.max(1, Math.round(performance.now() - start));
-        return {
-          books: result.books,
-          totalVerses: result.totalVerses,
-          latencyMs: this.lastInitLatencyMs
-        };
-      }
-    } catch {}
+      const prepackaged = await this.loadPrepackagedBible();
+      this.lastInitLatencyMs = Math.max(1, Math.round(performance.now() - start));
+      return {
+        books: prepackaged.books,
+        totalVerses: prepackaged.totalVerses,
+        latencyMs: this.lastInitLatencyMs
+      };
+    } catch (err) {
+      console.warn('Initial loadPrepackagedBible failed, falling back to seed:', err);
+    }
 
     // Seed with built-in 1954 Amharic Bible chapters & save to IndexedDB
     this.indexBooksArray(INITIAL_BIBLE_DB);
@@ -432,8 +432,14 @@ export class OfflineAmharicBibleDB {
    * Loads pre-packaged full 66-book Amharic Bible from /amharic_bible.json
    */
   public async loadPrepackagedBible(): Promise<{ books: BookData[]; totalVerses: number }> {
-    const res = await fetch('/amharic_bible.json');
-    if (!res.ok) throw new Error(`HTTP ${res.status} fetching /amharic_bible.json`);
+    const baseUrl = (typeof import.meta !== 'undefined' && import.meta.env?.BASE_URL) || '/';
+    const jsonPath = `${baseUrl.replace(/\/$/, '')}/amharic_bible.json`;
+    const res = await fetch(jsonPath);
+    if (!res.ok) throw new Error(`HTTP ${res.status} fetching ${jsonPath}`);
+    const contentType = res.headers.get('content-type') || '';
+    if (contentType.includes('text/html')) {
+      throw new Error(`Received HTML instead of JSON for ${jsonPath}`);
+    }
     const data = await res.json();
     return this.importCustomBibleJSON(data);
   }
